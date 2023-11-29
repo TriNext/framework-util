@@ -1,1 +1,1 @@
-rootProject.name = "TemplateRepository" // your project name
+rootProject.name = "framework-util"

@@ -2,6 +2,10 @@
 
 import org.owasp.dependencycheck.gradle.extension.DependencyCheckExtension
 
+group = "de.trinext"
+version = "0.0.1"
+
+
 java {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
@@ -11,6 +15,8 @@ java {
 }
 
 plugins {
+    `java-library`
+    `maven-publish`
     id("java")
     jacoco
     id("org.owasp.dependencycheck") version "8.4.0"
@@ -28,57 +34,19 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
 
-    // TODO Libraries / Framework-Artefakte können diesen Code-Teil entfernen.
-    /*
-    implementation("com.sparkjava:spark-core:2.9.4")
-    */
-}
-/*
 
-// Wenn das Projekt eine ausführbare Datei sein soll, kann es mit der folgenden Sektion zu einer FAT-Jar verpackt werden.
-// TODO Libraries / Framework-Artefakte können diesen Code-Teil entfernen.
-
-var pathToMain = "de.trinext.app.Main"
-
-tasks.withType<Jar> {
-    manifest {
-        attributes["Main-Class"] = pathToMain
-    }
 }
 
-val fatJar = task("fatJar", type = Jar::class) {
-    val baseName = "${project.name}-fat"
-    archiveFileName.set(baseName + ".jar")
-    manifest {
-        attributes["Implementation-Title"] = "Gradle Jar File Example"
-        attributes["Implementation-Version"] = version
-        attributes["Main-Class"] = pathToMain
-    }
-    from(configurations.runtimeClasspath.get().map({ if (it.isDirectory) it else zipTree(it) }))
-    with(tasks.jar.get() as CopySpec)
-}
-tasks {
-    "build" {
-        dependsOn(fatJar)
-    }
-}
-tasks.withType<Jar> {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
- */
-
-//TODO Applikationen können den folgenden Code-Teil entfernen.
 // Die folgende Sektion veröffentlicht  das Projekt zur GitHub registry
 // damit die folgende Sektion funktioniert, müssen die folgenden Umgebungsvariablen gesetzt korrekt sein:
 // TONYS_GITHUB_USERNAME
 // TONYS_PAT
-/*
+
 publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/trinext/ //TODO hier der name des repositories eintragen werden
-             ")
+            url = uri("https://maven.pkg.github.com/trinext/framework-util")
             credentials {
                 username = project.findProperty("gpr.user") as String? ?: System.getenv("TONYS_GITHUB_USERNAME")
                 password = project.findProperty("gpr.key") as String? ?: System.getenv("TONYS_PAT")
@@ -91,7 +59,8 @@ publishing {
         }
     }
 }
-*/
+
+
 
 tasks.check {
     dependsOn(":dependencyCheckAnalyze")
