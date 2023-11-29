@@ -1,0 +1,19 @@
+name: Static Code Analysis
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+      - 'dev'
+      - 'staging'
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: write
+
+jobs:
+  run-qodana-scan:
+    uses: TriNext/JTK-Workflows/.github/workflows/qodana-scan.yml@main
+    secrets:
+      QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}

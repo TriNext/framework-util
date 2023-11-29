@@ -1,0 +1,11 @@
+name: Validate Pull Requests
+
+#TODO remove workflow_dispatch and add pull_request back in
+on:
+  - workflow_dispatch
+#  pull_request:
+#    types: [ opened, reopened ]
+
+jobs:
+  enforce-branching-strategy:
+    uses: TriNext/JTK-Workflows/.github/workflows/enforce-branching-strategy.yml@main

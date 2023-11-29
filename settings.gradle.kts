@@ -1,0 +1,1 @@
+rootProject.name = "TemplateRepository" // your project name

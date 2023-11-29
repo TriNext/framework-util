@@ -1,0 +1,15 @@
+BIND_PORT=
+
+CONTAINER_NAME=
+TODO add project name and remove linebreaks
+-staging
+
+IMAGE_NAME=
+trinext/
+TODO add project name and remove linebreaks
+:staging
+
+HOST_NAME=
+staging.
+TODO add project name and remove linebreaks
+.nextfolder.de

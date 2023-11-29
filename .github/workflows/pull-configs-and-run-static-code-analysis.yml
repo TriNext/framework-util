@@ -1,0 +1,40 @@
+name: Update Configs and run Static Code Analysis
+on:
+  workflow_dispatch:
+  push:
+    branches-ignore:
+      - main
+      - dev
+      - staging
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: write
+
+jobs:
+  validate-branch-name:
+    uses: TriNext/JTK-Workflows/.github/workflows/validate-branch-name.yml@main
+  get-newest-qodana-file:
+    needs: [ validate-branch-name ]
+    uses: TriNext/JTK-Workflows/.github/workflows/pull-configs.yml@main
+    with:
+      FILE_PATH: qodana.yaml
+    secrets: inherit
+  get-newest-inspection-profile:
+    needs: [ get-newest-qodana-file ]
+    uses: TriNext/JTK-Workflows/.github/workflows/pull-configs.yml@main
+    with:
+      FILE_PATH: .idea/inspectionProfiles/
+    secrets: inherit
+  get-newest-code-style:
+    needs: [ get-newest-inspection-profile ]
+    uses: TriNext/JTK-Workflows/.github/workflows/pull-configs.yml@main
+    with:
+      FILE_PATH: .idea/codeStyles/
+    secrets: inherit
+  run-qodana-scan:
+    needs: [ get-newest-code-style ]
+    uses: TriNext/JTK-Workflows/.github/workflows/qodana-scan.yml@main
+    secrets:
+      QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
