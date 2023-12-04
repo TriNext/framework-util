@@ -1,6 +1,7 @@
 package de.trinext.util;
 
 /**
+ * Siehe: https://trinext.atlassian.net/wiki/x/DoDqC
  * @author Dennis Woithe
  */
 @SuppressWarnings({"unused", "DuplicateStringLiteralInspection"})
