@@ -1,4 +1,4 @@
-package de.trinext.util.internal.annotations;
+package de.trinext.framework.util.internal.annotations;
 
 import java.lang.annotation.*;
 

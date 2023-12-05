@@ -1,4 +1,4 @@
-package de.trinext.util;
+package de.trinext.framework.util;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
