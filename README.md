@@ -9,5 +9,5 @@
 
 ## How to publish
 - Increment the version in the `build.gradle.kts`
-- Set TONYS_PAT and TONYS_USERNAME in your environment
+- Set `TONYS_PAT` and `TONYS_GITHUB_USERNAME` in your environment
 - Execute `./gradlew publish`
