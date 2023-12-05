@@ -8,6 +8,6 @@
     - enable `Rearrange code`
 
 ## How to publish
-increment the version in the `build.gradle.kts`
-set TONYS_PAT and TONYS_USERNAME in your environment
-execute `./gradlew publish`
+- Increment the version in the `build.gradle.kts`
+- Set TONYS_PAT and TONYS_USERNAME in your environment
+- Execute `./gradlew publish`
