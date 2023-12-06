@@ -2,8 +2,8 @@ package framework.util;
 
 import java.util.HashMap;
 
-import de.trinext.framework.util.env.Env;
-import de.trinext.framework.util.env.EnvHelper;
+import de.trinext.util.Env;
+import de.trinext.util.EnvHelper;
 import org.junit.jupiter.api.*;
 
 import static de.trinext.framework.util.RandomHelper.randomWord;
