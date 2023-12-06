@@ -35,9 +35,6 @@ pipeline {
         }
         failure {
             setBuildStatus(repoUrl, "Sach ma hackst? Das willst du mergen? Nicht mit mir!", "FAILURE")
-            office365ConnectorSend webhookUrl: teamsWebhookUrl,
-                    message: 'Failed Pipeline for ' + currentBranch + '.',
-                    status: 'Failure'
         }
     }
 }
