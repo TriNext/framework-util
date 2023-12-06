@@ -40,10 +40,25 @@ public final class HttpBuilder {
 
     private HttpBuilder() { }
 
+    /**
+     * Set the {@link URI} used for the request. For example:
+     * <pre>{@code
+     * HttpBuilder.forUrl("https://www.example.com/status")
+     * }</pre>
+     */
     public static HttpBuilderWithUrl forUrl(String url) {
         return forUrl(URI.create(url));
     }
 
+    /**
+     * Set the {@link URI} used for the request. For example:
+     * <pre>{@code
+     * HttpBuilder.forUrl(new UrlQueryBuilder("https://www.example.com", "/status")
+     *        .param("personal", true)
+     *        .param("query", "all")
+     *        .build())
+     * }</pre>
+     */
     public static HttpBuilderWithUrl forUrl(URI url) {
         Objects.requireNonNull(url, "Url must not be null");
         return new HttpBuilderWithUrl(url);
@@ -59,6 +74,11 @@ public final class HttpBuilder {
             myUrl = uri;
         }
 
+        /**
+         * Add a header to the request.
+         *
+         * @throws IllegalArgumentException if the key is null or blank, the value is null or blank or the key already exists.
+         */
         public HttpBuilderWithUrl addHeader(String key, String value) {
             if (key == null || key.isBlank())
                 throw new IllegalArgumentException("Header key must not be null or blank");
@@ -70,6 +90,11 @@ public final class HttpBuilder {
             return this;
         }
 
+        /**
+         * Add multiple headers to the request.
+         *
+         * @see #addHeader(String, String)
+         */
         public HttpBuilderWithUrl addHeaders(Map<String, String> headers) {
             Objects.requireNonNull(headers, "Headers must not be null")
                     .forEach(this::addHeader);
@@ -108,15 +133,24 @@ public final class HttpBuilder {
             return withMethod(HttpMethod.PUT, bodyPublisher);
         }
 
+        /**
+         * Sets the {@link HttpMethod} used for the request and specifies to not send a body.
+         */
         public HttpBuilderRequest withMethod(HttpMethod method) {
             return withMethod(method, BodyPublishers.noBody());
         }
 
+        /**
+         * Sets the {@link HttpMethod} used for the request and specifies the body to send.
+         */
         public HttpBuilderRequest withMethod(HttpMethod method, BodyPublisher bodyPublisher) {
-            return fromBuilder(HttpRequest.newBuilder(myUrl).method(method.name(), bodyPublisher));
+            return addHeadersTo(HttpRequest.newBuilder(myUrl).method(method.name(), bodyPublisher));
         }
 
-        private HttpBuilderRequest fromBuilder(Builder builder) {
+        /**
+         * Adds the headers to the {@link Builder} and returns a {@link HttpBuilderRequest}.
+         */
+        private HttpBuilderRequest addHeadersTo(Builder builder) {
             myHeaders.forEach(builder::header);
             return new HttpBuilderRequest(builder.build());
         }
@@ -132,6 +166,9 @@ public final class HttpBuilder {
             this.request = request;
         }
 
+        /**
+         * Sets the expected body type.
+         */
         public <T> HttpBuilderRequestWithBody<T> expectBody(BodyHandler<T> bodyHandler) {
             return new HttpBuilderRequestWithBody<>(request, bodyHandler);
         }
@@ -152,16 +189,25 @@ public final class HttpBuilder {
         }
 
 
+        /**
+         * Sets the {@link HttpClient} used for the request. If not set, {@link #DEFAULT_CLIENT} is used.
+         */
         public HttpBuilderRequestWithBody<T> setClient(HttpClient httpClient) {
             client = Objects.requireNonNull(httpClient, "HttpClient must not be null");
             return this;
         }
 
+        /**
+         * Throws the given exception if the response code matches.
+         */
         public HttpBuilderRequestWithBody<T> throwIfCode(int code, Supplier<? extends RuntimeException> exceptionSupplier) {
             codeExceptions.put(code, Objects.requireNonNull(exceptionSupplier, "Exception supplier must not be null"));
             return this;
         }
 
+        /**
+         * Sends the request and tries to return the body.
+         */
         public Optional<T> send() {
             HttpResponse<T> response;
             try {
