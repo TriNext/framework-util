@@ -19,7 +19,7 @@ import java.util.function.Supplier;
  *         .build())
  *     .addHeader("Accept", "application/json")
  *     .addHeader("Authorization", "Bearer " + System.getenv("TEST_TOKEN"))
- *     .get()
+ *     .withMethod(HttpMethod.GET)
  *     .expectBody(BodyHandlers.ofString())
  *     .throwIfCode(404, () -> new IllegalStateException("Example.com not found!"))
  *     .setClient(HttpBuilder.DEFAULT_CLIENT)
@@ -76,20 +76,36 @@ public final class HttpBuilder {
             return this;
         }
 
+        /**
+         * @deprecated Use {@link #withMethod(HttpMethod)} instead.
+         */
+        @Deprecated(forRemoval = true)
         public HttpBuilderRequest get() {
-            return fromBuilder(HttpRequest.newBuilder(myUrl).GET());
+            return withMethod(HttpMethod.GET);
         }
 
+        /**
+         * @deprecated Use {@link #withMethod(HttpMethod)} instead.
+         */
+        @Deprecated(forRemoval = true)
         public HttpBuilderRequest post(BodyPublisher bodyPublisher) {
-            return fromBuilder(HttpRequest.newBuilder(myUrl).POST(bodyPublisher));
+            return withMethod(HttpMethod.POST, bodyPublisher);
         }
 
+        /**
+         * @deprecated Use {@link #withMethod(HttpMethod)} instead.
+         */
+        @Deprecated(forRemoval = true)
         public HttpBuilderRequest delete(BodyPublisher bodyPublisher) {
-            return fromBuilder(HttpRequest.newBuilder(myUrl).DELETE());
+            return withMethod(HttpMethod.DELETE, bodyPublisher);
         }
 
+        /**
+         * @deprecated Use {@link #withMethod(HttpMethod)} instead.
+         */
+        @Deprecated(forRemoval = true)
         public HttpBuilderRequest put(BodyPublisher bodyPublisher) {
-            return fromBuilder(HttpRequest.newBuilder(myUrl).PUT(bodyPublisher));
+            return withMethod(HttpMethod.PUT, bodyPublisher);
         }
 
         public HttpBuilderRequest withMethod(HttpMethod method) {
