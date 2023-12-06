@@ -1,14 +1,15 @@
-package de.trinext.util;
+package de.trinext.framework.util.env;
 
 import java.util.*;
 
-import de.trinext.util.internal.annotations.EvilShitFuckery;
+import de.trinext.framework.util.internal.annotations.EvilShitFuckery;
 
-import static de.trinext.util.internal.annotations.EvilShitFuckery.BlackMagic.*;
+import static de.trinext.framework.util.internal.annotations.EvilShitFuckery.BlackMagic.*;
 
 /**
  * @author Dennis Woithe
  */
+@SuppressWarnings({"unused", "WeakerAccess", "DuplicateStringLiteralInspection"})
 public final class EnvHelper {
 
     private EnvHelper() {
@@ -18,7 +19,8 @@ public final class EnvHelper {
     /**
      * The environment variables passed to the JVM at startup.
      */
-    public static final Map<String, String> ORIGINAL_ENVIRONMENT = Collections.unmodifiableMap(new HashMap<>(System.getenv()));
+    @SuppressWarnings({"StaticCollection", "PublicStaticCollectionField"})
+    public static final Map<String, String> ORIGINAL_ENVIRONMENT = Map.copyOf(System.getenv());
 
     private static final String PROCESS_ENVIRONMENT_CLASS = "java.lang.ProcessEnvironment";
 
