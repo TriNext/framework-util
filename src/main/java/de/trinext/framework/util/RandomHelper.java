@@ -9,9 +9,12 @@ import java.util.function.*;
 import java.util.stream.*;
 
 /**
+ * A helper that generates random values for tests.
+ * As the implementation currently uses {@link ThreadLocalRandom} it is not suitable for cryptographic purposes.
+ *
  * @author Dennis Woithe
  */
-@SuppressWarnings({"unused", "WeakerAccess", "HardCodedStringLiteral", "ConstantExpression", "MagicCharacter"})
+@SuppressWarnings({"unused", "WeakerAccess", "HardCodedStringLiteral", "ConstantExpression", "MagicCharacter", "BoundedWildcard"})
 public final class RandomHelper {
 
     private RandomHelper() {
@@ -52,48 +55,48 @@ public final class RandomHelper {
         randomDoubles(wordAmount).forEach(consumer);
     }
 
-    /** Executes the test for the passed amount of random {@link Double}s. */
-    public static void runForRandomBoxedDoubles(long wordAmount, Consumer<Double> test) {
-        randomDoubles(wordAmount).boxed().forEach(test);
+    /** Executes the consumer for the passed amount of random {@link Double}s. */
+    public static void runForRandomBoxedDoubles(long wordAmount, Consumer<Double> consumer) {
+        randomDoubles(wordAmount).boxed().forEach(consumer);
     }
 
-    /** Executes the test for the passed amount of random {@link BigInteger}s. */
-    public static void runForRandomBigInts(long wordAmount, Consumer<BigInteger> test) {
-        randomInts(wordAmount).mapToObj(BigInteger::valueOf).forEach(test);
+    /** Executes the consumer for the passed amount of random {@link BigInteger}s. */
+    public static void runForRandomBigInts(long wordAmount, Consumer<BigInteger> consumer) {
+        randomInts(wordAmount).mapToObj(BigInteger::valueOf).forEach(consumer);
     }
 
-    /** Executes the test for the passed amount of random ints. */
-    public static void runForRandomInts(long wordAmount, IntConsumer test) {
-        randomInts(wordAmount).forEach(test);
+    /** Executes the consumer for the passed amount of random ints. */
+    public static void runForRandomInts(long wordAmount, IntConsumer consumer) {
+        randomInts(wordAmount).forEach(consumer);
     }
 
-    /** Executes the test for the passed amount of random {@link Integer}s. */
-    public static void runForRandomBoxedInts(long wordAmount, Consumer<Integer> test) {
-        randomInts(wordAmount).boxed().forEach(test);
+    /** Executes the consumer for the passed amount of random {@link Integer}s. */
+    public static void runForRandomBoxedInts(long wordAmount, Consumer<Integer> consumer) {
+        randomInts(wordAmount).boxed().forEach(consumer);
     }
 
-    /** Executes the test for the passed amount of random longs. */
-    public static void runForRandomLongs(long wordAmount, LongConsumer test) {
-        randomLongs(wordAmount).forEach(test);
+    /** Executes the consumer for the passed amount of random longs. */
+    public static void runForRandomLongs(long wordAmount, LongConsumer consumer) {
+        randomLongs(wordAmount).forEach(consumer);
     }
 
-    /** Executes the test for the passed amount of random {@link Long}s. */
-    public static void runForRandomBoxedLongs(long wordAmount, Consumer<Long> test) {
-        randomLongs(wordAmount).boxed().forEach(test);
+    /** Executes the consumer for the passed amount of random {@link Long}s. */
+    public static void runForRandomBoxedLongs(long wordAmount, Consumer<Long> consumer) {
+        randomLongs(wordAmount).boxed().forEach(consumer);
     }
 
-    /** Executes the test for the passed amount of random {@link BigDecimal}s. */
-    public static void runForRandomBigDecs(long wordAmount, Consumer<BigDecimal> test) {
-        randomDoubles(wordAmount).mapToObj(BigDecimal::valueOf).forEach(test);
+    /** Executes the consumer for the passed amount of random {@link BigDecimal}s. */
+    public static void runForRandomBigDecs(long wordAmount, Consumer<BigDecimal> consumer) {
+        randomDoubles(wordAmount).mapToObj(BigDecimal::valueOf).forEach(consumer);
     }
 
     /**
-     * Executes the test for the passed amount of random {@link String}s.
+     * Executes the consumer for the passed amount of random {@link String}s.
      *
      * @param maxWordLength The max length of each {@link String}
      */
-    public static void runForRandomStrings(int maxWordLength, long wordAmount, Consumer<String> test) {
-        randomStrings(maxWordLength, wordAmount).forEach(test);
+    public static void runForRandomStrings(int maxWordLength, long wordAmount, Consumer<String> consumer) {
+        randomStrings(maxWordLength, wordAmount).forEach(consumer);
     }
 
     /** Generates one random int */
