@@ -3,8 +3,7 @@ package de.trinext.framework.util.net;
 import java.net.URI;
 import java.net.http.*;
 import java.net.http.HttpClient.Redirect;
-import java.net.http.HttpRequest.BodyPublisher;
-import java.net.http.HttpRequest.Builder;
+import java.net.http.HttpRequest.*;
 import java.net.http.HttpResponse.BodyHandler;
 import java.time.Duration;
 import java.util.*;
@@ -91,6 +90,14 @@ public final class HttpBuilder {
 
         public HttpBuilderRequest put(BodyPublisher bodyPublisher) {
             return fromBuilder(HttpRequest.newBuilder(myUrl).PUT(bodyPublisher));
+        }
+
+        public HttpBuilderRequest withMethod(HttpMethod method) {
+            return withMethod(method, BodyPublishers.noBody());
+        }
+
+        public HttpBuilderRequest withMethod(HttpMethod method, BodyPublisher bodyPublisher) {
+            return fromBuilder(HttpRequest.newBuilder(myUrl).method(method.name(), bodyPublisher));
         }
 
         private HttpBuilderRequest fromBuilder(Builder builder) {
