@@ -7,6 +7,7 @@ import java.net.http.HttpRequest.*;
 import java.net.http.HttpResponse.BodyHandler;
 import java.time.Duration;
 import java.util.*;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -181,7 +182,7 @@ public final class HttpBuilder {
         private final HttpRequest request;
         private final BodyHandler<T> bodyHandler;
 
-        private final Map<Integer, Supplier<? extends RuntimeException>> codeExceptions = new HashMap<>();
+        private final Map<Integer, Function<HttpResponse<T>, ? extends RuntimeException>> codeExceptions = new HashMap<>();
 
         public HttpBuilderRequestWithBody(HttpRequest request, BodyHandler<T> bodyHandler) {
             this.request = Objects.requireNonNull(request, "HttpRequest must not be null");
@@ -201,7 +202,14 @@ public final class HttpBuilder {
          * Throws the given exception if the response code matches.
          */
         public HttpBuilderRequestWithBody<T> throwIfCode(int code, Supplier<? extends RuntimeException> exceptionSupplier) {
-            codeExceptions.put(code, Objects.requireNonNull(exceptionSupplier, "Exception supplier must not be null"));
+            return throwIfCode(code, _ -> exceptionSupplier.get());
+        }
+
+        /**
+         * Throws the given exception if the response code matches.
+         */
+        public HttpBuilderRequestWithBody<T> throwIfCode(int code, Function<HttpResponse<T>, ? extends RuntimeException> function) {
+            codeExceptions.put(code, function);
             return this;
         }
 
@@ -217,7 +225,7 @@ public final class HttpBuilder {
                 return Optional.empty();
             }
             if (codeExceptions.containsKey(response.statusCode()))
-                throw codeExceptions.get(response.statusCode()).get();
+                throw codeExceptions.get(response.statusCode()).apply(response);
             return Optional.ofNullable(response.body());
         }
 
