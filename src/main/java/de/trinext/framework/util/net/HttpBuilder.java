@@ -202,7 +202,7 @@ public final class HttpBuilder {
          * Throws the given exception if the response code matches.
          */
         public HttpBuilderRequestWithBody<T> throwIfCode(int code, Supplier<? extends RuntimeException> exceptionSupplier) {
-            return throwIfCode(code, _ -> exceptionSupplier.get());
+            return throwIfCode(code, ignored -> exceptionSupplier.get());
         }
 
         /**
