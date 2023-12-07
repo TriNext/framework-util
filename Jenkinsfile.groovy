@@ -11,7 +11,7 @@ pipeline {
     environment {
         tonysPAT = credentials('tonysPAT')
         projectName = "$projectName"
-        JDK_JAVA_OPTIONS = '--add-opens java.base/java.lang=ALL-UNNAMED'
+        JDK_JAVA_OPTIONS = '--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED'
     }
     stages {
         stage('Prepare') {
