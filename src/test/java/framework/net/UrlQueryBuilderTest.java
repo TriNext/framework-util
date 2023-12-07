@@ -22,23 +22,25 @@ class UrlQueryBuilderTest {
     private static final String EXPECTED_STRING = "https://www.google.com/tonyStark?key1=value1&key2=value2";
     private static final URI EXPECTED_URI = URI.create(EXPECTED_STRING);
 
-    @Test void testUrlQueryBuilderWithFirstConstructor() {
-        UrlQueryBuilder urlQueryBuilder = new UrlQueryBuilder(BASEURL, ROUTE);
+    @Test
+    void test_url_query_builder_with_first_constructor() {
+        var urlQueryBuilder = new UrlQueryBuilder(BASEURL, ROUTE);
         for (var entry : TESTMAP.entrySet()) {
             urlQueryBuilder.param(entry.getKey(), entry.getValue());
         }
-        URI uri = urlQueryBuilder.build();
+        var uri = urlQueryBuilder.build();
         assertEquals(EXPECTED_URI, uri);
-        String uriString = urlQueryBuilder.toString();
+        var uriString = urlQueryBuilder.toString();
         assertEquals(EXPECTED_STRING, uriString);
     }
 
 
-    @Test void testUrlQueryBuilderWithSecondConstructor() {
-        UrlQueryBuilder urlQueryBuilder = new UrlQueryBuilder(BASEURL, ROUTE, TESTMAP);
-        URI uri = urlQueryBuilder.build();
+    @Test
+    void test_url_query_builder_with_second_constructor() {
+        var urlQueryBuilder = new UrlQueryBuilder(BASEURL, ROUTE, TESTMAP);
+        var uri = urlQueryBuilder.build();
         assertEquals(EXPECTED_URI, uri);
-        String uriString = urlQueryBuilder.toString();
+        var uriString = urlQueryBuilder.toString();
         assertEquals(EXPECTED_STRING, uriString);
     }
 
