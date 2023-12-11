@@ -20,6 +20,8 @@ public record AdvancedEncryptionStandard(Charset charset) {
 
     /** Generate a 256-bit key using SHA-256 hashing. */
     public Key generateKey(String seed) {
+        if (seed == null || seed.isEmpty())
+            throw new IllegalArgumentException("seed must not be null or empty");
         try {
             final var blockSize = 16;
             return new SecretKeySpec(Arrays.copyOf(getInstance("SHA-256").digest(seed.getBytes(charset)), blockSize), ALGORITHM);

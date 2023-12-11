@@ -1,4 +1,4 @@
-package framework.net;
+package framework.util.net;
 
 import java.net.URI;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package framework.util;
+package framework.util.encryption;
 
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
