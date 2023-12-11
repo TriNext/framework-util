@@ -32,6 +32,11 @@ public class UrlQueryBuilder {
         return this;
     }
 
+    public final UrlQueryBuilder param(String name, Object value) {
+        params.put(name, String.valueOf(value));
+        return this;
+    }
+
     public final UrlQueryBuilder param(String name, boolean value) {
         return param(name, value ? "1" : "0");
     }
