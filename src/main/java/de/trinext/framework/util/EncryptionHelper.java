@@ -33,7 +33,7 @@ public final class EncryptionHelper {
     }
 
     @SuppressWarnings("DuplicateStringLiteralInspection")
-    public static Optional<String> encrypt(String plaintext, Key secretKey) {
+    public static String encrypt(String plaintext, Key secretKey) {
         if (plaintext == null || plaintext.isEmpty())
             throw new IllegalArgumentException("plaintext must not be null or empty");
         if (secretKey == null)
@@ -45,14 +45,16 @@ public final class EncryptionHelper {
 
             // Encrypt the plaintext
             var encryptedText = cipher.doFinal(plaintext.getBytes(StandardCharsets.UTF_8));
-            return Optional.of(Base64.getEncoder().encodeToString(encryptedText));
-        } catch (InvalidKeyException | RuntimeException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException | NoSuchAlgorithmException e) {
-            throw new AssertionError(e);
+            return Base64.getEncoder().encodeToString(encryptedText);
+        } catch (NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException | NoSuchAlgorithmException internalError) {
+            throw new AssertionError(internalError);
+        } catch (InvalidKeyException | RuntimeException e) {
+            throw new IllegalArgumentException(e);
         }
     }
 
     @SuppressWarnings("DuplicateStringLiteralInspection")
-    public static Optional<String> decrypt(String encodedText, Key secretKey) {
+    public static String decrypt(String encodedText, Key secretKey) {
         if (encodedText == null || encodedText.isEmpty())
             throw new IllegalArgumentException("encodedText must not be null or empty");
         if (secretKey == null)
@@ -65,9 +67,11 @@ public final class EncryptionHelper {
 
             // Decrypt the ciphertext
             var decryptedText = cipher.doFinal(encryptedText);
-            return Optional.of(new String(decryptedText, StandardCharsets.UTF_8));
-        } catch (InvalidKeyException | RuntimeException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException | NoSuchAlgorithmException e) {
-            throw new AssertionError(e);
+            return new String(decryptedText, StandardCharsets.UTF_8);
+        } catch (NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException | NoSuchAlgorithmException internalError) {
+            throw new AssertionError(internalError);
+        } catch (InvalidKeyException | RuntimeException e) {
+            throw new IllegalArgumentException(e);
         }
     }
 

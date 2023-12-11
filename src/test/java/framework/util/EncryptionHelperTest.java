@@ -2,8 +2,6 @@ package framework.util;
 
 import javax.crypto.spec.SecretKeySpec;
 
-import java.util.Optional;
-
 import de.trinext.framework.util.EncryptionHelper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -32,12 +30,10 @@ class EncryptionHelperTest {
     void test_encrypt_and_decrypt() {
         SecretKeySpec key = EncryptionHelper.generateKey(TEST_KEY);
 
-        Optional<String> encryptedText = EncryptionHelper.encrypt(PLAINTEXT, key);
-        Optional<String> decryptedText = encryptedText.flatMap(text -> EncryptionHelper.decrypt(text, key));
+        String encryptedText = EncryptionHelper.encrypt(PLAINTEXT, key);
+        String decryptedText = EncryptionHelper.decrypt(encryptedText, key);
 
-        Assertions.assertTrue(encryptedText.isPresent());
-        Assertions.assertTrue(decryptedText.isPresent());
-        Assertions.assertEquals(PLAINTEXT, decryptedText.get());
+        Assertions.assertEquals(PLAINTEXT, decryptedText);
     }
 
     @Test
@@ -72,7 +68,7 @@ class EncryptionHelperTest {
     void test_decrypt_with_invalid_encoded_text() {
         SecretKeySpec key = EncryptionHelper.generateKey(TEST_KEY);
 
-        Assertions.assertThrows(AssertionError.class,
+        Assertions.assertThrows(IllegalArgumentException.class,
                 () -> EncryptionHelper.decrypt("invalid text", key));
     }
 
