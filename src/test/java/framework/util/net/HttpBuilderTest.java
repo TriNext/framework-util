@@ -1,14 +1,15 @@
-package de.trinext.framework.util.net;
+package framework.util.net;
 
-
-import de.trinext.framework.util.net.HttpBuilder.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.http.HttpResponse;
+
+import de.trinext.framework.util.net.HttpBuilder;
+import de.trinext.framework.util.net.HttpBuilder.HttpBuilderWithUrl;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class HttpBuilderTest {
 
@@ -56,7 +57,7 @@ public class HttpBuilderTest {
 
     @Test
     public void testHttpBuilderWithUrlConstructionWithInvalidUrl() {
-        String url = "invalid-url";
+        String url = "invalid   url";
         assertThrows(IllegalArgumentException.class, () -> HttpBuilder.forUrl(url), "Invalide URL");
     }
 }
