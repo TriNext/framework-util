@@ -36,7 +36,7 @@ public final class EnvHelper {
      *
      * @throws IllegalStateException When breaking eventually.
      */
-    @EvilShitFuckery(blackMagic = {MODIFIES_FINAL_FIELD, MODIFIES_PRIVATE_FIELD, MODIFIES_JDK_BEHAVIOUR, MODIFIES_IMMUTABLE_COLLECTION})
+    @EvilShitFuckery(blackMagic = {MODIFIES_FINAL_FIELD, MODIFIES_PRIVATE_FIELD, MODIFIES_JVM_BEHAVIOUR, MODIFIES_IMMUTABLE_STRUCT})
     @SuppressWarnings({"SpellCheckingInspection", "OverlyLongMethod", "NestedTryStatement", "OverlyNestedMethod"})
     public static void setEnv(Map<String, String> newEnvVars) {
         try {
@@ -47,11 +47,11 @@ public final class EnvHelper {
                 var env = (Map<String, String>) theEnvironmentField.get(null);
                 env.clear();
                 env.putAll(newEnvVars);
-                var theCaseInsensitiveEnvironmentField = processEnvironmentClass.getDeclaredField("theCaseInsensitiveEnvironment");
-                theCaseInsensitiveEnvironmentField.setAccessible(true);
-                var cienv = (Map<String, String>) theCaseInsensitiveEnvironmentField.get(null);
-                cienv.clear();
-                cienv.putAll(newEnvVars);
+                var theCaseInsensitiveEnvField = processEnvironmentClass.getDeclaredField("theCaseInsensitiveEnvironment");
+                theCaseInsensitiveEnvField.setAccessible(true);
+                var theCaseInsensitiveEnvVal = (Map<String, String>) theCaseInsensitiveEnvField.get(null);
+                theCaseInsensitiveEnvVal.clear();
+                theCaseInsensitiveEnvVal.putAll(newEnvVars);
             } catch (NoSuchFieldException e) {
                 var classes = Collections.class.getDeclaredClasses();
                 var env = System.getenv();
@@ -76,7 +76,7 @@ public final class EnvHelper {
      *
      * @see #setEnv(Map)
      */
-    @EvilShitFuckery(blackMagic = {MODIFIES_FINAL_FIELD, MODIFIES_PRIVATE_FIELD, MODIFIES_JDK_BEHAVIOUR, MODIFIES_IMMUTABLE_COLLECTION})
+    @EvilShitFuckery(blackMagic = {MODIFIES_FINAL_FIELD, MODIFIES_PRIVATE_FIELD, MODIFIES_JVM_BEHAVIOUR, MODIFIES_IMMUTABLE_STRUCT})
     public static void addEnvVariable(String key, String value) {
         if (key == null || key.isBlank())
             throw new IllegalArgumentException("Env-Variable key must not be null or blank");
