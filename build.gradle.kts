@@ -3,7 +3,7 @@
 import org.owasp.dependencycheck.gradle.extension.DependencyCheckExtension
 
 group = "de.trinext"
-version = "0.0.5"
+version = "0.0.7"
 
 
 java {
@@ -24,7 +24,7 @@ plugins {
 }
 
 application {
-    applicationDefaultJvmArgs = listOf("--add-opens", "java.base/java.lang=ALL-UNNAMED")
+    applicationDefaultJvmArgs = listOf("--add-opens=java.base/java.lang=ALL-UNNAMED")
 }
 
 repositories {
@@ -40,8 +40,6 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
     // https://mvnrepository.com/artifact/org.mockito/mockito-core
     testImplementation("org.mockito:mockito-core:5.7.0")
-
-
 }
 
 // Die folgende Sektion veröffentlicht  das Projekt zur GitHub registry
@@ -67,8 +65,6 @@ publishing {
     }
 }
 
-
-
 tasks.check {
     dependsOn(":dependencyCheckAnalyze")
 }
@@ -82,7 +78,7 @@ configure<DependencyCheckExtension> {
 tasks.test {
     useJUnitPlatform()
     finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
-    jvmArgs = listOf("--add-opens", "java.base/java.lang=ALL-UNNAMED")
+    jvmArgs = listOf("--add-opens=java.base/java.lang=ALL-UNNAMED")
 }
 tasks.jacocoTestReport {
     dependsOn(tasks.test) // tests are required to run before generating the report
