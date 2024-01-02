@@ -78,7 +78,7 @@ configure<DependencyCheckExtension> {
 tasks.test {
     useJUnitPlatform()
     finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
-    jvmArgs = listOf("--add-opens=java.base/java.lang=ALL-UNNAMED")
+    jvmArgs = listOf("--add-opens", "java.base/java.lang=ALL-UNNAMED")
 }
 tasks.jacocoTestReport {
     dependsOn(tasks.test) // tests are required to run before generating the report
