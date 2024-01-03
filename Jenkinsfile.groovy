@@ -11,6 +11,7 @@ pipeline {
     environment {
         tonysPAT = credentials('tonysPAT')
         projectName = "$projectName"
+        JDK_JAVA_OPTIONS = '--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED'
     }
     stages {
         stage('Prepare') {
@@ -35,9 +36,6 @@ pipeline {
         }
         failure {
             setBuildStatus(repoUrl, "Sach ma hackst? Das willst du mergen? Nicht mit mir!", "FAILURE")
-            office365ConnectorSend webhookUrl: teamsWebhookUrl,
-                    message: 'Failed Pipeline for ' + currentBranch + '.',
-                    status: 'Failure'
         }
     }
 }

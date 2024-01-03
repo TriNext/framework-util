@@ -1,13 +1,14 @@
-package util;
+package framework.util.env;
 
 import java.util.HashMap;
 
-import de.trinext.util.Env;
-import de.trinext.util.EnvHelper;
+import de.trinext.framework.util.env.Env;
+import de.trinext.framework.util.env.EnvHelper;
 import org.junit.jupiter.api.*;
 
-import static de.trinext.util.RandomHelper.randomWord;
-import static org.junit.jupiter.api.Assertions.*;
+import static de.trinext.framework.util.RandomHelper.randomWord;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * @author Dennis Woithe

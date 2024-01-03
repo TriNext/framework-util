@@ -6,3 +6,8 @@
     - enable `Reformat code (Whole File)`
     - enable `Optimize imports`
     - enable `Rearrange code`
+
+## How to publish
+- Increment the version in the `build.gradle.kts`
+- Set `TONYS_PAT` and `TONYS_GITHUB_USERNAME` in your environment
+- Execute `./gradlew publish`

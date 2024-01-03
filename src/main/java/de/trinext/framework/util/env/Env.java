@@ -1,7 +1,6 @@
-package de.trinext.util;
+package de.trinext.framework.util.env;
 
 /**
- * Siehe: https://trinext.atlassian.net/wiki/x/DoDqC
  * @author Dennis Woithe
  */
 @SuppressWarnings({"unused", "DuplicateStringLiteralInspection"})
