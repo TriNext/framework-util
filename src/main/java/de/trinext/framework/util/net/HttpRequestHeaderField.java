@@ -67,6 +67,7 @@ public enum HttpRequestHeaderField {
     X_CSRF_TOKEN("X-Csrf-Token"),
     X_REQUEST_ID("X-Request-ID"),
     X_CORRELATION_ID("X-Correlation-ID"),
+    CORRELATION_ID("Correlation-ID"),
     SAVE_DATA("Save-Data"),
     SEC_GPC("Sec-GPC");
 
