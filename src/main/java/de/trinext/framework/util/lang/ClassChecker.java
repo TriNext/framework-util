@@ -259,4 +259,9 @@ public class ClassChecker<T, X extends Throwable> {
         return checkIsNot(Class::isSealed, "sealed");
     }
 
+    /** Convenience method to map the checked {@link #cls} to a value. */
+    public <U> U map(Function<Class<T>, U> mapper) {
+        return mapper.apply(cls);
+    }
+
 }
